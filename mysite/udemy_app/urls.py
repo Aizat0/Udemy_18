@@ -31,3 +31,17 @@ urlpatterns = [
     path('option/', OptionListAPIView.as_view(), name='option-list'),
     path('option/<int:pk>/', OptionDetailAPIView.as_view(), name='option-detail'),
 ]
+
+from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+urlpatterns = [
+    # JWT TOKEN алуу
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+
+    # TOKEN жаңылоо
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+]
