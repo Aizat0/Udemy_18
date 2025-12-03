@@ -1,10 +1,11 @@
 from django.urls import include, path
 from rest_framework import routers
 from .views import (UserProfileViewSet, CategoryViewSet, SubCategoryViewSet, CourseListAPIView,
-                    CourseDetailAPIView, LessonListAPIView, LessonDetailAPIView, AssignmentListAPIView, AssignmentDetailAPIView,
-                     ExamListAPIView, ExamDetailAPIView, QuestionsListAPIView, QuestionsDetailAPIView,
+                    CourseDetailAPIView, LessonListAPIView, LessonDetailAPIView, AssignmentListAPIView,
+                    AssignmentDetailAPIView,
+                    ExamListAPIView, ExamDetailAPIView, QuestionsListAPIView, QuestionsDetailAPIView,
                     OptionListAPIView, OptionDetailAPIView, CertificateViewSet,
-                    ReviewViewSet, CartViewSet, CartItemViewSet)
+                    ReviewViewSet, CartViewSet, CartItemViewSet, RegisterView, LogoutView, CustomLoginView)
 
 
 router = routers.SimpleRouter()
@@ -18,6 +19,9 @@ router.register(r'cart_item', CartItemViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('course/', CourseListAPIView.as_view(), name='course-list'),
     path('course/<int:pk>/', CourseDetailAPIView.as_view(), name='course-detail'),
     path('lesson/', LessonListAPIView.as_view(), name='lesson-list'),
@@ -32,16 +36,3 @@ urlpatterns = [
     path('option/<int:pk>/', OptionDetailAPIView.as_view(), name='option-detail'),
 ]
 
-from django.urls import path
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
-
-urlpatterns = [
-    # JWT TOKEN алуу
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-
-    # TOKEN жаңылоо
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-]

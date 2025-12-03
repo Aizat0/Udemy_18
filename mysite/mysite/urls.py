@@ -19,19 +19,8 @@ schema_view = get_schema_view(
 )
 
 
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-
-    # Swagger UI
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
-
-    # ReDoc
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='redoc-ui'),
-]
-
-
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('udemy_app.urls')),
+    path('accounts/', include('allauth.urls')),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
