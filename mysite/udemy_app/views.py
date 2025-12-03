@@ -118,3 +118,24 @@ class ProductViewSet(ModelViewSet):
     ordering_fields = ['created_at', 'price']
 
 
+from rest_framework import viewsets, filters as drf_filters
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Movie
+from .serializers import MovieSerializer
+from .filters import MovieFilter
+
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    filter_backends = [DjangoFilterBackend, drf_filters.SearchFilter, drf_filters.OrderingFilter]
+    filterset_class = MovieFilter
+    search_fields = ["movie_name", "director__name", "actor__name"]
+    ordering_fields = ["year", "movie_name"]
+
+
+from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+class MovieViewSet(viewsets.ModelViewSet):
+    ...
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]

@@ -35,3 +35,11 @@ urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('udemy_app.urls')),
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+from django.urls import include, path
+urlpatterns = [
+    path('api/', include('movies.urls')),
+    path('api/auth/', include('rest_framework.urls')),
+    # allauth / jwt routes сен койгонуң боюнча
+]
