@@ -1,7 +1,5 @@
 from pathlib import Path
 import os
-
-from django.conf.global_settings import AUTH_USER_MODEL
 from dotenv import load_dotenv
 
 
@@ -36,11 +34,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'multiselectfield',
     'django_filters',
-    'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'rest_framework_simplejwt',
     'allauth.socialaccount',
-    ['corsheaders'],
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'corsheaders',
 
 ]
 SITE_ID = 1
@@ -55,7 +55,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    ['corsheaders.middleware.CorsMiddleware']
+    "allauth.account.middleware.AccountMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -148,6 +149,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'udemy_app.UserProfile'
 
 REST_FRAMEWORK = {
+<<<<<<< HEAD
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
@@ -176,5 +178,18 @@ REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] = (
     "rest_framework.authentication.SessionAuthentication",
 )
 
+=======
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+>>>>>>> b2ff4a5ff1f33da61d9eaf4e938e53a9567798f8
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
